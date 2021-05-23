@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// outdated script for when I used a bullet prefab instead of a raycast
 public class BulletScript : MonoBehaviour
 {
 

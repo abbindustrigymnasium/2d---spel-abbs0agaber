@@ -14,16 +14,9 @@ public class Shooting : MonoBehaviour
 
 
     public float bulletForce = 20f;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {
-        // Debug.DrawLine(firePoint.position, hit.position);
         if (Input.GetButtonDown("Fire1"))
         {
             Shoot();
@@ -46,17 +39,18 @@ public class Shooting : MonoBehaviour
 
     void Shoot()
     {
-        // Instantiate(tracerEffect.gameObject, GetComponentInChildren<Transform>().position, GetComponentInChildren<Transform>().rotation);
+        // Shoots raycast from muzzle
         RaycastHit2D hitInfo = Physics2D.Raycast(firePoint.position, firePoint.right);
+
         SpawnBulletTrail(hitInfo.point);
         animator.SetTrigger("Shoot");
         Shot.Play(0);
-
-    if(hitInfo)
-    {
-        Instantiate(impactEffect, hitInfo.point, transform.rotation);
-        Debug.Log(hitInfo.transform.name);
-        hitInfo.transform.GetComponent<EnemyGeneral>().TakeDamage(damage);
-    }
+        // If something has been hit Instansiate hiteffect and Makes enemy take damage
+        if(hitInfo)
+        {
+            Instantiate(impactEffect, hitInfo.point, transform.rotation);
+            Debug.Log(hitInfo.transform.name);
+            hitInfo.transform.GetComponent<EnemyGeneral>().TakeDamage(damage);
+        }
     }
 }

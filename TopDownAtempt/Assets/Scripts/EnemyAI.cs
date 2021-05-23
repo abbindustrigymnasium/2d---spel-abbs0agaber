@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
 
+
+// this has been combined with the EnemyScript in EnemyGeneral
 public class EnemyAI : MonoBehaviour
 {
     public Transform target;

@@ -15,26 +15,32 @@ public class FOV : MonoBehaviour
 
     void Start()
     {
+        // Creates the mesh for the FOV effect
         mesh  = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
     }
 
     private void LateUpdate()
     {
-
+        // Sets starting angle corrected for player rotation
         float angle = StartingAngle + 90;
         float angleIncrese = fov/rayCount;
 
-        Vector3[] vertices = new Vector3[rayCount + 1 +1];
+        // Creates array for the vertacies , uv, and points for the triangles  
+        Vector3[] vertices = new Vector3[rayCount + 1 + 1];
         Vector2[] uv = new Vector2[vertices.Length];
         int[] triangles = new int[rayCount * 3];
         
+        // sets first vertex to the origin
         vertices[0] = origin;
 
+        // Creates Index for vertex and triangle
         int vertexIndex = 1;
         int triangleIndex = 0;
+
         for (int i = 0; i <= rayCount; i++)
         {
+            // Sets vertex to hitpoint of the raycast if it hit something, otherwise to the max viewdistance
             Vector3 vertex;
             RaycastHit2D raycastHit2D = Physics2D.Raycast(origin, UtilsClass.GetVectorFromAngle(angle), viewDistance, layerMask);
             if(raycastHit2D.collider == null){
@@ -42,8 +48,10 @@ public class FOV : MonoBehaviour
             } else {
                 vertex = raycastHit2D.point;
             }
+            // sets the vertex in the array to the created vertex
             vertices[vertexIndex] = vertex;
 
+            // Sets each triangels points to origin, previous vertex and current vertex
             if (i>0)
             {
                 triangles[triangleIndex + 0] = 0;
@@ -52,10 +60,12 @@ public class FOV : MonoBehaviour
 
                 triangleIndex += 3;
             }
+            // Goes to next angel and next vertex
             vertexIndex++;
             angle -= angleIncrese;
         }
 
+        // Gives the mesh its properties
         mesh.vertices = vertices;
         mesh.uv = uv;
         mesh.triangles = triangles;

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+// This has been combined with the EnemyAI script in the EnemyGeneral script
 public class EnemyScript : MonoBehaviour
 {
     // Start is called before the first frame update
